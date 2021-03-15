@@ -1,0 +1,24 @@
+---
+- name: Pre
+  hosts: centos
+
+  tasks:
+
+  - name: install EPEL-Release
+    yum:
+      name: epel-release
+      state: present
+
+  - name: install pre
+    yum:
+      name: "{{ item }}"
+      state: present
+    loop:
+      - htop
+      - nano
+      - wget
+
+  - name: disable firewalld
+    systemd:
+      name: firewalld
+      enabled: no
