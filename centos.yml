@@ -19,10 +19,11 @@
       - wget
       - nginx
 
-  - name: Reload service nginx, in all cases
-    ansible.builtin.systemd:
+  - name: enable nginx
+    systemd:
       name: nginx
-      state: started  
+      state: restarted
+      enabled: yes  
 
   - name: open port 80
     firewalld:
