@@ -17,8 +17,15 @@
       - htop
       - nano
       - wget
+      - nginx
 
-  - name: disable firewalld
-    systemd:
-      name: firewalld
-      enabled: no
+  - name: Reload service nginx, in all cases
+    ansible.builtin.systemd:
+      name: nginx
+      state: started  
+
+  - name: open port 80
+    firewalld:
+      port: 80/tcp
+      permanent: true
+      state: enabled
