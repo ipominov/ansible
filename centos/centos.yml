@@ -1,0 +1,37 @@
+---
+- name: Pre
+  hosts: centos
+
+  tasks:
+
+  - name: install EPEL-Release
+    yum:
+      name: epel-release
+      state: present
+
+  - name: upgrade all packages
+    yum:
+      name: '*'
+      state: latest
+
+  - name: install pre
+    yum:
+      name: "{{ item }}"
+      state: present
+    loop:
+      - htop
+      - nano
+      - wget
+      - nginx
+
+  - name: enable nginx
+    systemd:
+      name: nginx
+      state: restarted
+      enabled: yes  
+
+  - name: open port 80
+    firewalld:
+      port: 80/tcp
+      permanent: true
+      state: enabled
