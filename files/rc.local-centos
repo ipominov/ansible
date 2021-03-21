@@ -1,2 +1,0 @@
-touch /var/lock/subsys/local
-/etc/firewall.sh

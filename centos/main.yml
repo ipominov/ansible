@@ -1,7 +1,7 @@
 ---
-- name: Pre
+- name: Prepare
   hosts: centos
-
+  
   tasks:
 
   - name: install EPEL-Release
@@ -9,7 +9,7 @@
       name: epel-release
       state: present
 
-  - name: install pre
+  - name: Install needful soft
     yum:
       name: "{{ item }}"
       state: present
