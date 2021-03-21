@@ -4,6 +4,11 @@
   
   tasks:
 
+  - name: install EPEL-Release
+    yum:
+      name: epel-release
+      state: present
+
   - name: install nginx
     yum:
       name: nginx
