@@ -9,6 +9,11 @@
       name: epel-release
       state: present
 
+  - name: upgrade all packages
+    yum:
+      name: '*'
+      state: latest
+
   - name: install pre
     yum:
       name: "{{ item }}"

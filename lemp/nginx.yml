@@ -1,15 +1,26 @@
 ---
 - name: Install Nginx
-  hosts: servers
+  hosts: centos
   
   tasks:
 
+  - name: install EPEL-Release
+    yum:
+      name: epel-release
+      state: present
+
   - name: install nginx
-    apt:
+    yum:
       name: nginx
       state: present
 
-  - name: enable nginx
+  - name: open port 80
+    firewalld:
+      port: 80/tcp
+      permanent: true
+      state: enabled
+
+  - name: start nginx
     systemd:
       name: nginx
       state: restarted
