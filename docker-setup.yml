@@ -4,6 +4,12 @@
   
   tasks:
 
+  - name: Disable Firewalld service
+    systemd:
+      name: firewalld
+      enabled: no
+      state: stopped
+
   - name: Install EPEL-Release
     yum:
       name: epel-release
@@ -21,6 +27,7 @@
     loop:
       - htop
       - wget
+      - nano
       - docker
 
   - name: Enable and start Docker service
