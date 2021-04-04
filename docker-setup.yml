@@ -1,0 +1,30 @@
+---
+- name: Install Docker on CentOS clear machine
+  hosts: docker
+  
+  tasks:
+
+  - name: Install EPEL-Release
+    yum:
+      name: epel-release
+      state: present
+
+  - name: Upgrade all packages
+    yum:
+      name: '*'
+      state: latest
+
+  - name: Install needful soft
+    yum:
+      name: "{{ item }}"
+      state: present
+    loop:
+      - htop
+      - wget
+      - docker
+
+  - name: Enable and start Docker service
+    systemd:
+      name: docker
+      enabled: yes
+      state: started

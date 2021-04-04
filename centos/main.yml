@@ -17,3 +17,8 @@
       - htop
       - nano
       - wget
+
+  - name: upgrade all packages
+    yum:
+      name: '*'
+      state: latest

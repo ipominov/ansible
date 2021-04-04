@@ -2,4 +2,7 @@
 client ansible_host=192.168.0.19
 
 [centos]
-client ansible_host=192.168.0.20
+client ansible_host=192.168.0.11
+
+[docker]
+client ansible_host=192.168.0.13
