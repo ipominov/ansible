@@ -1,13 +1,24 @@
 ---
-- name: Prepare
+- name: Prepare CentOS clear machine
   hosts: centos
   
   tasks:
 
-  - name: install EPEL-Release
+  - name: Disable Firewalld service
+    systemd:
+      name: firewalld
+      enabled: no
+      state: stopped
+
+  - name: Install EPEL-Release
     yum:
       name: epel-release
       state: present
+
+  - name: Upgrade all packages
+    yum:
+      name: '*'
+      state: latest
 
   - name: Install needful soft
     yum:
@@ -15,10 +26,5 @@
       state: present
     loop:
       - htop
-      - nano
       - wget
-
-  - name: upgrade all packages
-    yum:
-      name: '*'
-      state: latest
+      - nano
