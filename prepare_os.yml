@@ -1,17 +1,47 @@
 ---
-- name: Prepare Ubuntu clear machine
-  hosts: centos
-
+- name: Prepare clear machine
+  hosts: ubuntu
+  
   tasks:
 
-  - name: install nginx ubuntu
-    apt:
-      pkg: nginx
-      state: latest
+  - name: Disable Firewalld service
+    systemd:
+      name: firewalld
+      enabled: no
+      state: stopped
+    when: ansible_facts['distribution'] == "CentOS"
+
+  - name: Disable UFW service
+    systemd:
+      name: ufw
+      enabled: no
+      state: stopped
     when: ansible_facts['distribution'] == "Ubuntu"
 
-  - name: install nginx centos
+  - name: Install EPEL-Release (if Centos)
     yum:
-      name: nginx
+      name: epel-release
+      state: present
+    when: ansible_facts['distribution'] == "CentOS"
+
+  - name: Upgrade all packages (if CentOS)
+    yum:
+      name: '*'
       state: latest
+    when: ansible_facts['distribution'] == "CentOS"
+
+  - name: Upgrade all packages (if Ubuntu)
+    apt:
+      pkg: '*'
+      state: latest
+    when: ansible_facts['distribution'] == "Ubuntu"  
+
+  - name: Install needful soft
+    yum:
+      name: "{{ item }}"
+      state: present
+    loop:
+      - htop
+      - wget
+      - nano
     when: ansible_facts['distribution'] == "CentOS"
