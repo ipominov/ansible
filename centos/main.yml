@@ -1,6 +1,6 @@
 ---
-- name: Prepare CentOS clear machine
-  hosts: centos
+- name: Prepare clear machine
+  hosts: ubuntu
   
   tasks:
 
@@ -24,11 +24,17 @@
       state: present
     when: ansible_facts['distribution'] == "CentOS"
 
-  - name: Upgrade all packages
+  - name: Upgrade all packages (if CentOS)
     yum:
       name: '*'
       state: latest
     when: ansible_facts['distribution'] == "CentOS"
+
+  - name: Upgrade all packages (if Ubuntu)
+    apt:
+      pkg: '*'
+      state: latest
+    when: ansible_facts['distribution'] == "Ubuntu"  
 
   - name: Install needful soft
     yum:

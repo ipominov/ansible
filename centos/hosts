@@ -1,2 +1,5 @@
 [centos]
 client ansible_host=192.168.0.11
+
+[ubuntu]
+ans-ubuntu ansible_host=192.168.0.12
