@@ -1,7 +1,7 @@
 ---
 - name: Install Docker on CentOS clear machine
   hosts: docker
-  
+
   tasks:
 
   - name: Disable Firewalld service
@@ -32,6 +32,6 @@
 
   - name: Enable and start Docker service
     systemd:
-      name: docker
+      name: docker1
       enabled: yes
       state: started

@@ -1,8 +1,8 @@
 [ubuntu] 
-client ansible_host=192.168.0.19
+ans-ubuntu ansible_host=192.168.0.12
 
 [centos]
-client ansible_host=192.168.0.11
+ans-centos ansible_host=192.168.0.11
 
 [docker]
-client ansible_host=192.168.0.13
+ans-docker ansible_host=192.168.0.13
