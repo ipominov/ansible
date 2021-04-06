@@ -9,16 +9,26 @@
       name: firewalld
       enabled: no
       state: stopped
+    when: ansible_facts['distribution'] == "CentOS"
 
-  - name: Install EPEL-Release
+  - name: Disable UFW service
+    systemd:
+      name: ufw
+      enabled: no
+      state: stopped
+    when: ansible_facts['distribution'] == "Ubuntu"
+
+  - name: Install EPEL-Release (if Centos)
     yum:
       name: epel-release
       state: present
+    when: ansible_facts['distribution'] == "CentOS"
 
   - name: Upgrade all packages
     yum:
       name: '*'
       state: latest
+    when: ansible_facts['distribution'] == "CentOS"
 
   - name: Install needful soft
     yum:
@@ -28,3 +38,4 @@
       - htop
       - wget
       - nano
+    when: ansible_facts['distribution'] == "CentOS"

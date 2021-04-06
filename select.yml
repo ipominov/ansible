@@ -2,8 +2,16 @@
 - name: Prepare Ubuntu clear machine
   hosts: centos
 
-- name: install nginx
-  apt:
-    name: nginx
-    state: present
-  when: ansible_facts['distribution'] == "Ubuntu"
+  tasks:
+
+  - name: install nginx ubuntu
+    apt:
+      pkg: nginx
+      state: latest
+    when: ansible_facts['distribution'] == "Ubuntu"
+
+  - name: install nginx centos
+    yum:
+      name: nginx
+      state: latest
+    when: ansible_facts['distribution'] == "CentOS"
