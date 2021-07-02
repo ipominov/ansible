@@ -1,0 +1,30 @@
+---
+- name: Install SoftEther VPN Server
+  hosts: centos
+
+  tasks:
+
+  - name: Install needful packages
+    yum:
+      name: "{{ item }}"
+      state: present
+    loop:
+      - git
+      - readline-devel
+      - openssl-devel
+      - make
+      - gcc
+  
+  - name: Clone SoftEther repository from GitHub
+    git:
+      repo: https://github.com/SoftEtherVPN/SoftEtherVPN_Stable.git
+      dest: /tmp/softether
+
+  - name: configure
+    shell: ./configure
+    args:
+      chdir: /tmp/softether
+
+  - name: make
+    make:
+      chdir: /tmp/softether

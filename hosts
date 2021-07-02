@@ -2,7 +2,7 @@
 ans-ubuntu ansible_host=192.168.0.12
 
 [centos]
-ans-centos ansible_host=192.168.0.11
+ans-centos ansible_host=192.168.0.21
 
 [docker]
 ans-docker ansible_host=192.168.0.13
