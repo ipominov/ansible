@@ -1,0 +1,40 @@
+---
+- name: Prepare clear machine
+  hosts: centos
+  
+  tasks:
+
+  - name: Install EPEL-Release
+    yum:
+      name: epel-release
+      state: present
+
+  - name: Install needful soft
+    yum:
+      name: "{{ item }}"
+      state: present
+    loop:
+      - htop
+      - wget
+      - nano
+      - git
+
+---
+- name: Create users
+  hosts: centos
+  
+  vars_prompt:
+    - name: var_login    
+      prompt: "Enter new user login:"    
+      private: no
+    - name: var_password    
+      prompt: "Enter a password for the user"    
+      private: no    
+      encrypt: "md5_crypt"     
+      confirm: yes    
+      salt_size: 7
+
+  tasks:
+
+  - name: add new user 
+    user: name="{{ var_login }}" password="{{ var_password }}" home="/home/{{ var_login }}" shell="/bin/bash"
