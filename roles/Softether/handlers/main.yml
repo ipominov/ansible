@@ -1,0 +1,13 @@
+---
+
+- name: Reload SSHD service
+  systemd:
+    name: sshd
+    state: reloaded
+
+- name: Enable and start SoftEther VPN Service
+  systemd:
+    state: restarted
+    daemon_reload: yes
+    name: softether-vpnserver.service
+
