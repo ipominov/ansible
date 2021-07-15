@@ -1,0 +1,95 @@
+---
+- name: Install Nginx
+  hosts: centos
+  
+  tasks:
+
+  - name: install EPEL-Release
+    yum:
+      name: epel-release
+      state: present
+
+  - name: install nginx
+    yum:
+      name: nginx
+      state: present
+
+  - name: Replace config file
+    copy: src=files/nginx.conf dest=/etc/nginx/nginx.conf
+
+- name: Install PHP-FPM
+  hosts: centos
+  
+  tasks:
+
+  - name: install php-fpm
+    yum:
+      name: "{{ item }}"
+      state: present
+    loop:
+      - nano
+      - wget
+      - unzip
+      - php
+      - php-common
+      - php-curl
+      - php-gd
+      - php-mbstring
+      - php-soap
+      - php-xml
+      - php-xmlrpc
+      - php-zip
+      - php-fpm
+      - php-mysql
+      - php-cli
+      - php-ldap
+
+- name: wp files
+  hosts: centos
+
+  tasks:
+
+  - name: files
+    shell: rm -rf * && wget https://priprav-ka59.ru/latest-ru_RU.zip && unzip latest-ru_RU.zip && mv wordpress/* ./ && rm -rf wordpress && rm -f latest-ru_RU.zip
+    args:
+      chdir: /usr/share/nginx/html
+
+
+- name: Install MySQL
+  hosts: centos
+  
+  tasks:
+
+  - name: install mysql
+    yum:
+      name: "mariadb-server"
+      state: present
+
+- name: Start services
+  hosts: centos
+
+  tasks:
+
+  - name: Enable and start PHP-FPM
+    systemd:
+      state: restarted
+      daemon_reload: yes
+      name: php-fpm
+
+  - name: Enable and start Nginx
+    systemd:
+      state: restarted
+      daemon_reload: yes
+      name: nginx
+
+  - name: Enable and start MariaDB
+    systemd:
+      state: restarted
+      daemon_reload: yes
+      name: mariadb
+
+  - name: Disable Firewalld service
+    systemd:
+      name: firewalld
+      enabled: no
+      state: stopped
