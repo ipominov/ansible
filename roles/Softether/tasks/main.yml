@@ -8,6 +8,11 @@
     name: epel-release
     state: present
 
+- name: Upgrade all packages
+  yum:
+    name: '*'
+    state: latest
+
 - name: Install needful soft
   yum:
     name: "{{ item }}"
@@ -17,6 +22,10 @@
     - wget
     - nano
     - git
+    - readline-devel
+    - openssl-devel
+    - make
+    - gcc
 
 - name: Open port on Firewalld
   firewalld:
@@ -24,16 +33,6 @@
     permanent: true
     state: enabled
 
-- name: Install needful packages
-  yum:
-    name: "{{ item }}"
-    state: present
-  loop:
-    - readline-devel
-    - openssl-devel
-    - make
-    - gcc
-  
 - name: Clone SoftEther repository from GitHub
   git:
     repo: https://github.com/SoftEtherVPN/SoftEtherVPN_Stable.git
