@@ -14,4 +14,4 @@
       salt_size: 7
 
   roles:
-    - Softether
+    - softether
